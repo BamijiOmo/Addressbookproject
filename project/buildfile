@@ -4,16 +4,9 @@ pipeline {
   maven 'mymaven'
 }
     stages {
-        stage('Project Build Job') {
+        stage('Build') {
             steps {
                 sh 'mvn clean package'
-            }
-        }
-        stage('Project Deploy Job') {
-            steps {
-                sshagent(['project']) {
-    sh "scp -o StrictHostKeyChecking=no target/*.war project@3.142.79.3:/home/project/tomcat/webapps"
-}
             }
         }
     }
