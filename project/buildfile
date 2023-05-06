@@ -1,0 +1,20 @@
+pipeline {
+    agent any  
+   tools {
+  maven 'mymaven'
+}
+    stages {
+        stage('Project Build Job') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Project Deploy Job') {
+            steps {
+                sshagent(['project']) {
+    sh "scp -o StrictHostKeyChecking=no target/*.war project@3.142.79.3:/home/project/tomcat/webapps"
+}
+            }
+        }
+    }
+}
