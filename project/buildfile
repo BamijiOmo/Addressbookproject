@@ -9,5 +9,12 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
+        stage('Deploy') {
+            steps {
+                sshagent(['jenkinstomcat']) {
+    sh "scp -o StrictHostKeyChecking=no target/*.war project@3.142.79.3:/home/project/tomcat/webapps"
+}
+            }
+        }
     }
 }
